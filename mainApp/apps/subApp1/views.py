@@ -287,6 +287,9 @@ def services(request,userID):
     ### Check Session 
     if 'key' not in request.session:
         return redirect('/')
+    ### Check If Current User
+    if str(request.session['id']) != str(userID):
+        return redirect('/dashboard')
     ### Get the User Info
     c61=Person.objects.filter(id=userID)
     ### Get User Types
@@ -410,6 +413,110 @@ def addParking(request,userID):
                 plateNo=request.POST.get('inputPlateNo').upper(), 
                 permitNo=c82, 
             )
+    return redirect('/services/'+userID)
+
+### Delete Person Group Logic
+def deleteGroup(request,userID,noID):
+    print '*'*20+" deleteGroup "+'*'*20
+    if 'key' not in request.session:
+        return redirect('/')
+    ### Get and Delete - Person Group 
+    if str(request.session['id']) == str(userID):
+        c101=userGroup.objects.get(id=noID)
+        c101.delete()
+    return redirect('/services/'+userID)
+
+### Delete Meal Group Logic
+def deleteMeal(request,userID,noID):
+    print '*'*20+" deleteMeal "+'*'*20
+    if 'key' not in request.session:
+        return redirect('/')
+    ### Get and Delete - Meal Group 
+    if str(request.session['id']) == str(userID):
+        c111=MealGroup.objects.get(id=noID)
+        c111.delete()
+    return redirect('/services/'+userID)
+
+### Delete Building Logic
+def deleteBuilding(request,userID,noID):
+    print '*'*20+" deleteBuilding "+'*'*20
+    if 'key' not in request.session:
+        return redirect('/')
+    ### Get and Delete - Building 
+    if str(request.session['id']) == str(userID):
+        c121=Building.objects.get(id=noID)
+        c121.delete()
+    return redirect('/services/'+userID)
+
+### Delete Parking Logic
+def deleteParking(request,userID,noID):
+    print '*'*20+" deleteParking "+'*'*20
+    if 'key' not in request.session:
+        return redirect('/')
+    ### Get Parking 
+    if str(request.session['id']) == str(userID):
+        c131=Parking.objects.get(id=noID)
+        c131.delete()
+    return redirect('/services/'+userID)
+
+### Update Phone Info
+def updatePhone(request,userID):
+    print '*'*20+" updatePhone "+'*'*20
+    if 'key' not in request.session:
+        return redirect('/')
+    print userID
+    if request.method == "POST":
+        ### Input Validation
+        errors = Person.objects.updatePhone_validator(request.POST)
+        if len(errors):
+            for tag, error in errors.iteritems():
+                messages.error(request, error, extra_tags=tag)
+            return redirect('/services/'+userID)
+        else:
+            c141=Person.objects.get(id=userID)
+            c141.phone = request.POST.get('inputUpdatePhone')
+            c141.save()
+    ### 
+    return redirect('/services/'+userID)
+
+### Update Ext No
+def updateExtNum(request,userID):
+    print '*'*20+" updateExtNum "+'*'*20
+    if 'key' not in request.session:
+        return redirect('/')
+    print userID
+    if request.method == "POST":
+        ### Input Validation
+        errors = Person.objects.updateExtNum_validator(request.POST)
+        if len(errors):
+            for tag, error in errors.iteritems():
+                messages.error(request, error, extra_tags=tag)
+            return redirect('/services/'+userID)
+        else:
+            c151=Person.objects.get(id=userID)
+            c151.extNum = request.POST.get('inputUpdateExtNum')
+            c151.save()
+    ### 
+    return redirect('/services/'+userID)
+
+### Update Person Email
+def updatePersonEmail(request,userID):
+    print '*'*20+" updatePersonEmail "+'*'*20
+    if 'key' not in request.session:
+        return redirect('/')
+    print userID
+    if request.method == "POST":
+        ### Input Validation
+        errors = Person.objects.updatePersonEmail_validator(request.POST)
+        if len(errors):
+            for tag, error in errors.iteritems():
+                messages.error(request, error, extra_tags=tag)
+            return redirect('/services/'+userID)
+        else:
+            c161=Person.objects.get(id=userID)
+            c161.personEmail = request.POST.get('inputUpdatePersonEmail')
+            c161.save()
+    ### 
     return redirect('/services/'+userID)
 
 ### Logout

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Compus Service (System Setting)</title>
+    <title>Compus Service (Admin)</title>
     {% load static %}
     <!-- The line above tells Django to be ready to listen for static files -->
     <link rel='stylesheet' href='{% static "bootstrap/css/bootstrap.css" %}' media='screen' title='no title' charset='utf-8'>
@@ -16,11 +16,11 @@
     <!-- Navigation Bar -->
     <div class="container">
         <div class="navbar-text ">
-            <a class="navbar-brand ">Campus Service - System Setting</a>
+            <a class="navbar-brand ">Campus Service - Admin</a>
         </div>
         <p class="navbar-text navbar-right">
-            <a class="btn btn-primary" href="/dashboard" role="button">Home</a>
-            <a class="btn btn-primary" href="/logout" role="button">Logout</a>
+            <a class="btn btn-outline-dark" href="/dashboard" role="button">Home</a>
+            <a class="btn btn-outline-dark" href="/logout" role="button">Logout</a>
         </p>
     </div>
 </nav>
@@ -59,10 +59,10 @@
             <form action="/addUserType" method="post" class="form-inline">
                 {% csrf_token %}
                 <div class="form-group mb-2">
-                    <label for="inputUserType">New User Type</label>
-                    <input type="text" class="form-control" name="inputUserType" value="">
+                    <label for="inputUserType">New Group: </label>
+                    <input type="text" class="form-control-sm" name="inputUserType" value="">
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Add Campus Group</button>
+                <button type="submit" class="btn btn-primary btn-sm">Add Campus Group</button>
             </form>
         </fieldset>
     </div>
@@ -92,14 +92,15 @@
             <form action="/addMealType" method="post" class="form-inline">
                 {% csrf_token %}
                 <div class="form-group mb-2">
-                    <label for="inputMealType">New Meal Card Type</label>
-                    <input type="text" class="form-control" name="inputMealType" value="">
+                    <label for="inputMealType">New Meal Card Type: </label>
+                    <input type="text" class="form-control-sm" name="inputMealType" value="">
                 </div>
+                &nbsp;
                 <div class="form-group mb-2">
-                    <label for="inputMealAmt">New Meal Card Amount</label>
-                    <input type="text" class="form-control" name="inputMealAmt" value="">
+                    <label for="inputMealAmt">New Meal Card Amount: </label>
+                    <input type="text" class="form-control-sm" name="inputMealAmt" value="">
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Add Meal Card</button>
+                <button type="submit" class="btn btn-primary btn-sm">Add Meal Card</button>
             </form>
         </fieldset>
     </div>

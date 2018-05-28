@@ -16,4 +16,11 @@ urlpatterns = [
     url(r'^addMeal/(?P<userID>\d+)$', views.addMeal),
     url(r'^addBuilding/(?P<userID>\d+)$', views.addBuilding),
     url(r'^addParking/(?P<userID>\d+)$', views.addParking),
+    url(r'^deleteGroup/(?P<userID>\d+)/(?P<noID>\d+)$', views.deleteGroup),
+    url(r'^deleteMeal/(?P<userID>\d+)/(?P<noID>\d+)$', views.deleteMeal),
+    url(r'^deleteBuilding/(?P<userID>\d+)/(?P<noID>\d+)$', views.deleteBuilding),
+    url(r'^deleteParking/(?P<userID>\d+)/(?P<noID>\d+)$', views.deleteParking),
+    url(r'^updatePhone/(?P<userID>\d+)$', views.updatePhone),
+    url(r'^updateExtNum/(?P<userID>\d+)$', views.updateExtNum),
+    url(r'^updatePersonEmail/(?P<userID>\d+)$', views.updatePersonEmail),
 ]

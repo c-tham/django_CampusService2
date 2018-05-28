@@ -19,10 +19,11 @@
             <a class="navbar-brand ">College Campus Service - Services</a>
         </div>
         <p class="navbar-text navbar-right">
-            <a class="btn btn-primary" href="/dashboard" role="button">Home</a>
-            <a class="btn btn-primary" href="/system" role="button">System</a>
-            <a class="btn btn-primary" href="/logout" role="button">Logout</a>
+            <a class="btn btn-outline-dark" href="/dashboard" role="button">Home</a>
+            <a class="btn btn-outline-dark" href="/system" role="button">Admin</a>
+            <a class="btn btn-outline-dark" href="/logout" role="button">Logout</a>
         </p>
+
     </div>
 </nav>
 
@@ -43,6 +44,14 @@
         <fieldset>
             <h3>User Summary:</h3>
             <table class="table table-hover table-striped">
+                <tr>
+                    <td class="col-md-6">
+                        <strong>Item</strong>
+                    </td>
+                    <td class="col-md-6">
+                        <Strong>Description</Strong>
+                    </td>
+                </tr>
                 {% for all in allPersons %}
                 <tr>
                     <td>
@@ -69,6 +78,45 @@
                     <td>{{all.collegeEmail}}</td>
                 </tr>
                 <!--  -->
+                <form action="/updatePhone/{{all.id}}" method="post">
+                    {% csrf_token %}
+                    <tr>
+                        <td>
+                            <strong>Phone</strong>
+                        </td>
+                        <td>
+                            <input class="form-control-sm" type='text' name='inputUpdatePhone' value={{all.phone}}>
+                            <button type="submit" class="btn btn-success btn-sm">Update</button>
+                        </td>
+                    </tr>
+                </form>
+                <!--  -->
+                <form action="/updateExtNum/{{all.id}}" method="post">
+                    {% csrf_token %}
+                    <tr>
+                        <td>
+                            <strong>Office Extension Number</strong>
+                        </td>
+                        <td>
+                            <input class="form-control-sm" type='text' name='inputUpdateExtNum' value={{all.extNum}}>
+                            <button type="submit" class="btn btn-success btn-sm">Update</button>
+                        </td>
+                    </tr>
+                </form>
+                <!--  -->
+                <form action="/updatePersonEmail/{{all.id}}" method="post">
+                    {% csrf_token %}
+                    <tr>
+                        <td>
+                            <strong>Personal Email Address</strong>
+                        </td>
+                        <td>
+                            <input class="form-control-sm" type='text' name='inputUpdatePersonEmail' value={{all.personEmail}}>
+                            <button type="submit" class="btn btn-success btn-sm">Update</button>
+                        </td>
+                    </tr>
+                </form>
+                <!--  -->
                 <tr>
                     <td>
                         <strong>Group Type</strong>
@@ -77,7 +125,7 @@
                         {% for allType in all.personGroupID.all %}
                         <li>
                             {{allType.userType_ID.nameType}} {%if forloop.counter0 > 0%}
-                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
+                            <a class="btn btn-danger btn-sm" href="/deleteGroup/{{id}}/{{allType.id}}" role="button">Delete this record</a>
                             {% endif %}
                         </li>
                         {% endfor %}
@@ -92,7 +140,7 @@
                         {% for allMeal in allMeanPlans %}
                         <li>
                             {{allMeal.ID_mealType.CardType}} (${{allMeal.ID_mealType.CardAmt}})
-                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
+                            <a class="btn btn-danger btn-sm" href="/deleteMeal/{{id}}/{{allMeal.id}}" role="button">Delete this record</a>
                         </li>
                         {% endfor %}
                     </td>
@@ -103,10 +151,10 @@
                         <strong>Building and Office Room</strong>
                     </td>
                     <td>
-                        {% for allbuild in allBuilding%}
+                        {% for allBuild in allBuilding%}
                         <li>
-                            {{allbuild.buildingName}}, {{allbuild.officeRoom}} {% if forloop.counter0 > 0 %}
-                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
+                            {{allBuild.buildingName}}, {{allBuild.officeRoom}} {% if forloop.counter0 > 0 %}
+                            <a class="btn btn-danger btn-sm" href="/deleteBuilding/{{id}}/{{allBuild.id}}" role="button">Delete this record</a>
                             {% endif %}
                         </li>
                         {% endfor %}
@@ -121,7 +169,7 @@
                         {% for allCar in allParking%}
                         <li>
                             {{allCar.plateNo}} / Permit No: {{allCar.permitNo}}
-                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
+                            <a class="btn btn-danger btn-sm" href="/deleteParking/{{id}}/{{allCar.id}}" role="button">Delete this record</a>
                         </li>
                         {% endfor %}
                     </td>
@@ -148,7 +196,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary btn-sm">Add</button>
             </form>
         </fieldset>
     </div>
@@ -170,7 +218,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary btn-sm">Add</button>
             </form>
         </fieldset>
     </div>
@@ -183,13 +231,13 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="inputBuilding">Building Name:</label>
-                    <input type="text" class="form-control" name="inputBuilding" value="">
+                    <input type="text" class="form-control-sm" name="inputBuilding" value="">
                 </div>
                 <div class="form-group">
                     <label for="inputOffice">Office Room No:</label>
-                    <input type="text" class="form-control" name="inputOffice" value="">
+                    <input type="text" class="form-control-sm" name="inputOffice" value="">
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Add</button>
+                <button type="submit" class="btn btn-primary btn-sm">Add</button>
             </form>
         </fieldset>
     </div>
@@ -202,9 +250,9 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="inputPlateNo">Vehicle Plate No:</label>
-                    <input type="text" class="form-control" name="inputPlateNo" value="">
+                    <input type="text" class="form-control-sm" name="inputPlateNo" value="">
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Add</button>
+                <button type="submit" class="btn btn-primary btn-sm">Add</button>
             </form>
         </fieldset>
     </div>

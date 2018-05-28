@@ -57,8 +57,6 @@ class PersonManager(models.Manager):
         if postData['inputPassword1'] != postData['inputPassword2']:
             errors["1error100"] = "Registration failed! Password and confirm password should be matched!"
 
-
-
         return errors
 
     def login_validator(self, postData):
@@ -101,6 +99,24 @@ class PersonManager(models.Manager):
         errors = {}
         if len(postData['inputPlateNo']) < 6 or len(postData['inputPlateNo']) > 6 :
             errors["6error1"] = "The vehicle plate number required 6 characters only."
+        return errors
+
+    def updatePhone_validator(self, postData):
+        errors = {}
+        if len(postData["inputUpdatePhone"]) < 9 or not PHONE_REGEX.match(postData["inputUpdatePhone"]):
+            errors["7error1"] = "Updates failed! Invalid phone number format. Ex. 999-999-9999."
+        return errors
+
+    def updateExtNum_validator(self, postData):
+        errors = {}
+        if len(postData["inputUpdateExtNum"]) < 4 or not EXTNUM_REGEX.match(postData["inputUpdateExtNum"]):
+            errors["7error2"] = "Updates failed! Invalid extension number format. Ex. 9999."
+        return errors
+
+    def updatePersonEmail_validator(self, postData):
+        errors = {}
+        if len(postData['inputUpdatePersonEmail']) < 7 or not EMAIL_REGEX.match(postData['inputUpdatePersonEmail']):
+            errors["7error3"] = "Updates failed! Invalid personal email address!"
         return errors
 
 class Person(models.Model):

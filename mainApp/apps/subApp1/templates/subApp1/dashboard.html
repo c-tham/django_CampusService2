@@ -19,9 +19,9 @@
             <a class="navbar-brand ">College Campus Service - Dashboard</a>
         </div>
         <p class="navbar-text navbar-right">
-            <a class="btn btn-primary" href="/dashboard" role="button">Home</a>
-            <a class="btn btn-primary" href="/system" role="button">System</a>
-            <a class="btn btn-primary" href="/logout" role="button">Logout</a>
+            <a class="btn btn-outline-dark" href="/dashboard" role="button">Home</a>
+            <a class="btn btn-outline-dark" href="/system" role="button">Admin</a>
+            <a class="btn btn-outline-dark" href="/logout" role="button">Logout</a>
         </p>
     </div>
 </nav>
@@ -41,7 +41,7 @@
     <!-- All User Menu -->
     <div id="main">
         <fieldset>
-            <h3>List of users information.</h3>
+            <h3>List of users information:</h3>
             <table class="table table-hover table-striped">
                 <tr>
                     <th>No</th>
@@ -56,6 +56,7 @@
                     <th>Action</th>
                 </tr>
                 {% for all in allPersons %}
+
                 <tr>
                     <td>{{all.id}}</td>
                     <td>{{all.campusID}}</td>
@@ -67,12 +68,13 @@
                     <!-- <td>{{all.createdAt}}</td> -->
                     <!-- <td>{{all.updatedAt}}</td> -->
                     <td>
-                        <a class="btn btn-primary" href="/user/{{all.id}}" role="button">Details</a>
+                        <a class="btn btn-primary btn-sm" href="/user/{{all.id}}" role="button">Details</a>
                         {% if all.id == id %}
-                        <a class="btn btn-primary" href="/services/{{all.id}}" role="button">Services</a>
+                        <a class="btn btn-primary btn-sm" href="/services/{{all.id}}" role="button">Services</a>
                         {% endif %}
                     </td>
                 </tr>
+
                 {% endfor %}
             </table>
         </fieldset>
