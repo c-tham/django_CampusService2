@@ -1,1 +1,2 @@
-# django_CampusService2
+# Project: CampusService2
+
