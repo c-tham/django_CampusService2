@@ -80,17 +80,27 @@ class PersonManager(models.Manager):
     def mealType_validator(self, postData):
         errors = {}
         if len(postData['inputMealType']) < 3:
-            errors["5error1"] = "The description of meal card type required mininum of 3 characters."
+            errors["4error1"] = "The description of meal card type required mininum of 3 characters."
         if len(postData['inputMealAmt']) < 1:
-            errors["5error2"] = "The amount of meal card is missing."
+            errors["4error2"] = "The amount of meal card is missing."
+        return errors
+
+    def mealGroup_validator(self, postData):
+        errors = {}
         return errors
 
     def building_validator(self, postData):
         errors = {}
         if len(postData['inputBuilding']) < 3:
-            errors["6error1"] = "The building name required mininum of 3 characters."
+            errors["5error1"] = "The building name required mininum of 3 characters."
         if len(postData['inputOffice']) < 3:
-            errors["6error2"] = "The office room required mininum of 3 characters."
+            errors["5error2"] = "The office room required mininum of 3 characters."
+        return errors
+
+    def parking_validator(self, postData):
+        errors = {}
+        if len(postData['inputPlateNo']) < 6 or len(postData['inputPlateNo']) > 6 :
+            errors["6error1"] = "The vehicle plate number required 6 characters only."
         return errors
 
 class Person(models.Model):
@@ -142,6 +152,6 @@ class MealCardType(models.Model):
 
 class MealGroup(models.Model):
     ID_meal = models.ForeignKey(Person, related_name="personMealID")
-    ID_mealType = models.ForeignKey(userType, related_name="mealTypeID")
+    ID_mealType = models.ForeignKey(MealCardType, related_name="mealTypeID")
     createdAt = models.DateTimeField(auto_now_add = True)
     updatedAt = models.DateTimeField(auto_now = True)

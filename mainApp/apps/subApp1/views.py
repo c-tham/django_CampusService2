@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+from django.utils.crypto import get_random_string
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from .models import *
@@ -206,21 +207,35 @@ def user(request,userID):
     age = temp_today.year - temp_born.year - ((temp_today.month, temp_today.day) < (temp_born.month, temp_born.day))
     ### Get User Types
     c43=userGroup.objects.filter(person_ID=userID)
-    ### Get Building Types
+
+    ## Get Building Info
     c44=Building.objects.filter(ID_building=userID)
-    ### Get User Types
+    ## Get Parking Info
     c45=Parking.objects.filter(ID_parking=userID)
+    ## Get Meal Cards
+    c46=MealCardType.objects.all()
+    ## Get Meal Plans
+    c47=MealGroup.objects.filter(ID_meal=userID)
+
+    ### Get Building Types
+    # c44=Building.objects.filter(ID_building=userID)
     ### Get User Types
-    c46=MealGroup.objects.filter(ID_meal=userID)
+    # c45=Parking.objects.filter(ID_parking=userID)
+    ### Get User Types
+    # c46=MealGroup.objects.filter(ID_meal=userID)
     ### Context Info
     context = {
         "id" : userID,
         "currentID": request.session['id'],
         "allPersons" : c41,
         "allUserGroup": c43,
-        "allBuildingGroup": c44,
-        "allParkingGroup": c45,
-        "allMealGroup": c46,
+        "allBuilding": c44,
+        "allParking": c45,
+        "allMealCards": c46,
+        "allMeanPlans": c47,
+        # "allBuildingGroup": c44,
+        # "allParkingGroup": c45,
+        # "allMealGroup": c46,
         "age" : age
     }
     return render(request, "subApp1/user.html", context)
@@ -254,7 +269,7 @@ def addUserGroup(request,userID):
         errors = Person.objects.userGroup_validator(request.POST)
         temp_group = request.POST.get('inputUserType')
         if str(temp_group) == '0':
-            errors["9error030"] = "You did not select a new user group."
+            errors["9error030"] = "You did not selected a new user group."
             for tag, error in errors.iteritems():
                 messages.error(request, error, extra_tags=tag)
             return redirect('/services/'+userID)
@@ -287,14 +302,23 @@ def services(request,userID):
         c62a=c62a.difference(c64)
     ## Get Building Info
     c65=Building.objects.filter(ID_building=userID)
-    print c65
+    ## Get Parking Info
+    c66=Parking.objects.filter(ID_parking=userID)
+    ## Get Meal Cards
+    c67=MealCardType.objects.all()
+    ## Get Meal Plans
+    c68=MealGroup.objects.filter(ID_meal=userID)
     ### Context Info
     context = {
         "id" : userID,
+        "currentID": request.session['id'],
         "allPersons" : c61,
         "allUserType": c62a,
         "allUserGroup": c63,
         "allBuilding": c65,
+        "allParking": c66,
+        "allMealCards": c67,
+        "allMeanPlans": c68,
     }
     return render(request, "subApp1/services.html", context)
 
@@ -318,6 +342,28 @@ def addMealType(request):
             )
     return redirect('/system')
 
+### Add Meal Logic
+def addMeal(request,userID):
+    print '*'*20+" addMeal "+'*'*20
+    if 'key' not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        ### Input Validation
+        errors = Person.objects.mealGroup_validator(request.POST)
+        temp_group = request.POST.get('inputMealCard')
+        if str(temp_group) == '0':
+            errors["9error040"] = "You did not selected a new meal plan."
+            for tag, error in errors.iteritems():
+                messages.error(request, error, extra_tags=tag)
+            return redirect('/services/'+userID)
+        else:
+            ### Get the Record
+            c71=Person.objects.get(id=userID)
+            c72=MealCardType.objects.get(id=request.POST.get('inputMealCard'))
+            ### Insert MealGroup Into DB
+            MealGroup.objects.create(ID_meal=c71,ID_mealType=c72)
+    return redirect('/services/'+userID)
+
 ### Add Building Office Logic
 def addBuilding(request,userID):
     print '*'*20+" addBuilding "+'*'*20
@@ -332,12 +378,37 @@ def addBuilding(request,userID):
             return redirect('/services/'+userID)
         else:
             ### Get userID
-            c71=Person.objects.get(id=userID)
+            c81=Person.objects.get(id=userID)
             ### Insert Into DB
             Building.objects.create(
-                ID_building=c71,
+                ID_building=c81,
                 buildingName=request.POST.get('inputBuilding'), 
                 officeRoom=request.POST.get('inputOffice'), 
+            )
+    return redirect('/services/'+userID)
+
+### Add Parking Logic
+def addParking(request,userID):
+    print '*'*20+" addParking "+'*'*20
+    if 'key' not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        ### Input Validation
+        errors = Person.objects.parking_validator(request.POST)
+        if len(errors):
+            for tag, error in errors.iteritems():
+                messages.error(request, error, extra_tags=tag)
+            return redirect('/services/'+userID)
+        else:
+            ### Get userID
+            c81=Person.objects.get(id=userID)
+            ### Generate Random Permit No
+            c82=get_random_string(length=15).upper()
+            ### Insert Into DB
+            Parking.objects.create(
+                ID_parking=c81,
+                plateNo=request.POST.get('inputPlateNo').upper(), 
+                permitNo=c82, 
             )
     return redirect('/services/'+userID)
 

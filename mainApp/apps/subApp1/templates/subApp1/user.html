@@ -41,7 +41,7 @@
     <!-- User Menu -->
     <div id="main">
         <fieldset>
-            <h3>User details.</h3>
+            <h3>User Details:</h3>
             <table class="table table-hover table-striped">
                 {% for all in allPersons %}
                 <tr>
@@ -112,6 +112,7 @@
                     <td>{{all.updatedAt}}</td>
                 </tr>
                  -->
+                <!--  -->
                 <tr>
                     <td>
                         <strong>Group Type</strong>
@@ -119,15 +120,30 @@
                     <td>
                         {% for allType in all.personGroupID.all %}
                         <li>
-                            {{allType.userType_ID.nameType}} {% if forloop.counter0 > 0 and allType.person_ID.id == currentID%}
+                            {{allType.userType_ID.nameType}}
+                            <!-- {% if forloop.counter0 > 0 and allType.person_ID.id == currentID%} -->
                             <!-- {{allType.person_ID.id }}/ -->
-                            {{currentID}}
-                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
-                            {% endif %}
+                            <!-- {{currentID}} -->
+                            <!-- <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a> -->
+                            <!-- {% endif %} -->
                         </li>
                         {% endfor %}
                     </td>
                 </tr>
+                <!--  -->
+                <tr>
+                    <td>
+                        <strong>Meal Plans</strong>
+                    </td>
+                    <td>
+                        {% for allMeal in allMeanPlans %}
+                        <li>
+                            {{allMeal.ID_mealType.CardType}} (${{allMeal.ID_mealType.CardAmt}})
+                        </li>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <!--  -->
                 <tr>
                     <td>
                         <strong>Building and Room</strong>
@@ -135,29 +151,27 @@
                     <td>
                         {% for allBuilding in all.personBuildingID.all %}
                         <li>
-                            {{allBuilding.buildingName}}, {{allBuilding.officeRoom}} {%if forloop.counter0 > 0 and allBuilding.ID_building.id == currentID%}
+                            {{allBuilding.buildingName}}, {{allBuilding.officeRoom}}
+                            <!-- {%if forloop.counter0 > 0 and allBuilding.ID_building.id == currentID%} -->
                             <!-- {{allBuilding.ID_building.id}} / {{currentID}} -->
-                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
-                            {% endif %}
+                            <!-- <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a> -->
+                            <!-- {% endif %} -->
                         </li>
                         {% endfor %}
                     </td>
                 </tr>
+                <!--  -->
                 <tr>
                     <td>
-                        <strong>Vehicle Plate No / Parking Permits</strong>
+                        <strong>Vehicle Plate No and Parking Permit No</strong>
                     </td>
                     <td>
-                        {% for allParking in all.allParkingGroup.all %}
-                        <li>{{allParking.plateNo}} / {{allParking.permitNo}}</li>
+                        {% for allCar in allParking%}
+                        <li>
+                            {{allCar.plateNo}} / Permit No: {{allCar.permitNo}}
+                        </li>
                         {% endfor %}
                     </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>Meal Cards</strong>
-                    </td>
-                    <td></td>
                 </tr>
                 {% endfor %}
             </table>

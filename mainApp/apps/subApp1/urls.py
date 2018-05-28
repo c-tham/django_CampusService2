@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^user/(?P<userID>\d+)$', views.user),
     url(r'^services/(?P<userID>\d+)$', views.services),
     url(r'^addMealType$', views.addMealType),
+    url(r'^addMeal/(?P<userID>\d+)$', views.addMeal),
     url(r'^addBuilding/(?P<userID>\d+)$', views.addBuilding),
+    url(r'^addParking/(?P<userID>\d+)$', views.addParking),
 ]

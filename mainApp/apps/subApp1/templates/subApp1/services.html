@@ -68,23 +68,61 @@
                     </td>
                     <td>{{all.collegeEmail}}</td>
                 </tr>
+                <!--  -->
                 <tr>
                     <td>
                         <strong>Group Type</strong>
                     </td>
                     <td>
                         {% for allType in all.personGroupID.all %}
-                        <li>{{allType.userType_ID.nameType}}</li>
+                        <li>
+                            {{allType.userType_ID.nameType}} {%if forloop.counter0 > 0%}
+                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
+                            {% endif %}
+                        </li>
                         {% endfor %}
                     </td>
                 </tr>
+                <!--  -->
+                <tr>
+                    <td>
+                        <strong>Meal Plans</strong>
+                    </td>
+                    <td>
+                        {% for allMeal in allMeanPlans %}
+                        <li>
+                            {{allMeal.ID_mealType.CardType}} (${{allMeal.ID_mealType.CardAmt}})
+                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
+                        </li>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <!--  -->
                 <tr>
                     <td>
                         <strong>Building and Office Room</strong>
                     </td>
                     <td>
                         {% for allbuild in allBuilding%}
-                        <li>{{allbuild.buildingName}}, {{allbuild.officeRoom}}</li>
+                        <li>
+                            {{allbuild.buildingName}}, {{allbuild.officeRoom}} {% if forloop.counter0 > 0 %}
+                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <!--  -->
+                <tr>
+                    <td>
+                        <strong>Vehicle Plate No and Parking Permit No</strong>
+                    </td>
+                    <td>
+                        {% for allCar in allParking%}
+                        <li>
+                            {{allCar.plateNo}} / Permit No: {{allCar.permitNo}}
+                            <a class="btn btn-danger btn-sm" href="#" role="button">Delete this record</a>
+                        </li>
                         {% endfor %}
                     </td>
                 </tr>
@@ -115,7 +153,29 @@
         </fieldset>
     </div>
     <hr>
-    <!-- building  -->
+    <!-- Meal Card -->
+    <div>
+        <fieldset>
+            <h3>Add Meal Card:</h3>
+            <form action="/addMeal/{{id}}" method="post" class="form-inline">
+                {% csrf_token %}
+                <!-- User Type DropDown Menu -->
+                <div class="form-group">
+                    <label for="inputMealCard">Meal Card:</label>
+                    <!-- List All User Type -->
+                    <select name="inputMealCard">
+                        <option class="dropdown-item" value="0" selected>&nbsp;</option>
+                        {% for all in allMealCards %}
+                        <option class="dropdown-item" value={{all.id}}>&nbsp;{{all.CardType}} (${{all.CardAmt}})&nbsp;</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </fieldset>
+    </div>
+    <hr>
+    <!-- Building  -->
     <div>
         <fieldset>
             <h3>Add Building and Office:</h3>
@@ -129,11 +189,28 @@
                     <label for="inputOffice">Office Room No:</label>
                     <input type="text" class="form-control" name="inputOffice" value="">
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Add Building and Office</button>
+                <button type="submit" class="btn btn-primary mb-2">Add</button>
+            </form>
+        </fieldset>
+    </div>
+    <hr>
+    <!-- Parking Permit  -->
+    <div>
+        <fieldset>
+            <h3>Add Parking Permit:</h3>
+            <form action="/addParking/{{id}}" method="post" class="form-inline">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="inputPlateNo">Vehicle Plate No:</label>
+                    <input type="text" class="form-control" name="inputPlateNo" value="">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Add</button>
             </form>
         </fieldset>
     </div>
     <hr>
 </div>
+<br>
+<br>
 
 </html>
