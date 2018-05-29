@@ -9,6 +9,7 @@ from .models import *
 import datetime
 import time
 import random
+import bcrypt
 
 ### Index page
 def index(request):
@@ -88,6 +89,8 @@ def regUser(request):
                 if len(c13) == 0:
                     break
             ### End While Loop
+            ### Bcrypt Password
+            hashPassword = bcrypt.hashpw(request.POST.get('inputPassword1').encode(), bcrypt.gensalt())
             ### Insert Person Into DB
             Person.objects.create(
                 campusID=temp_id, 
@@ -99,7 +102,8 @@ def regUser(request):
                 extNum=request.POST.get('inputExtNum'),
                 personEmail=request.POST.get('inputPersonEmail'), 
                 collegeEmail=temp_email,
-                password=request.POST.get('inputPassword1'),
+                # password=request.POST.get('inputPassword1'),
+                password=hashPassword,
             )
             ### Get the Record
             c14=Person.objects.get(collegeEmail=temp_email)
@@ -144,11 +148,18 @@ def login(request):
                 ### Get Password From DB
                 c22 = Person.objects.get(collegeEmail=temp_e)
                 ### Password Not Match
-                if c22.password != temp_p:
-                    errors["9error020"] = "Signed Failed! Invalid credentials!"
+                # if c22.password != temp_p:
+                #     errors["9error020"] = "Signed Failed! Invalid credentials! Error 1"
+                ### Bcrypt Password Not Match
+                hashPassword_db = c22.password
+                # print bcrypt.checkpw(temp_p.encode(), hashPassword_db.encode())
+                if bcrypt.checkpw(temp_p.encode(), hashPassword_db.encode()):
+                    pass
+                else:
+                    errors["9error021"] = "Signed Failed! Invalid credentials!"
             else:
                 ### College Email Not Found
-                errors["9error021"] = "Signed Failed! Invalid credentials!"
+                errors["9error022"] = "Signed Failed! Invalid credentials!"
             ### Prepare Error Messages
             if len(errors):
                 for tag, error in errors.iteritems():
