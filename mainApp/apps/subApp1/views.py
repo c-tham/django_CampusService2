@@ -227,13 +227,6 @@ def user(request,userID):
     c46=MealCardType.objects.all()
     ## Get Meal Plans
     c47=MealGroup.objects.filter(ID_meal=userID)
-
-    ### Get Building Types
-    # c44=Building.objects.filter(ID_building=userID)
-    ### Get User Types
-    # c45=Parking.objects.filter(ID_parking=userID)
-    ### Get User Types
-    # c46=MealGroup.objects.filter(ID_meal=userID)
     ### Context Info
     context = {
         "id" : userID,
@@ -244,9 +237,6 @@ def user(request,userID):
         "allParking": c45,
         "allMealCards": c46,
         "allMeanPlans": c47,
-        # "allBuildingGroup": c44,
-        # "allParkingGroup": c45,
-        # "allMealGroup": c46,
         "age" : age
     }
     return render(request, "subApp1/user.html", context)

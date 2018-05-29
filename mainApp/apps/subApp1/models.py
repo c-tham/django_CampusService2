@@ -21,10 +21,10 @@ class PersonManager(models.Manager):
         print today, year12
 
         if len(postData['inputFirstName']) < 3:
-            errors["1error010"] = "Registration failed! The first name required mininum of 3 characters."
+            errors["1error010"] = "Registration failed! The first name required minimum of 3 characters."
 
         if len(postData['inputLastName']) < 3:
-            errors["1error020"] = "Registration failed! The last name required mininum of 3 characters."
+            errors["1error020"] = "Registration failed! The last name required minimum of 3 characters."
 
         if len(postData["inputDateBirth"]) < 10 or not DATE_REGEX.match(postData["inputDateBirth"]):
             errors["1error030"] = "Registration failed! Invalid date format in date of birth."
@@ -32,7 +32,7 @@ class PersonManager(models.Manager):
             errors["1error031"] = "Registration failed! The person should be at least 12 years old!"
 
         if len(postData['inputAddress']) < 5:
-            errors["1error040"] = "Registration failed! The address required mininum of 5 characters."
+            errors["1error040"] = "Registration failed! The address required minimum of 5 characters."
         
         if len(postData["inputPhone"]) < 9 or not PHONE_REGEX.match(postData["inputPhone"]):
             errors["1error050"] = "Registration failed! Invalid phone number format. Ex. 999-999-9999."
@@ -41,10 +41,10 @@ class PersonManager(models.Manager):
             errors["1error060"] = "Registration failed! Invalid extension number format. Ex. 9999."
 
         if len(postData['inputBuilding']) < 3:
-            errors["1error070"] = "Registration failed! The building name required mininum of 3 characters."
+            errors["1error070"] = "Registration failed! The building name required minimum of 3 characters."
         
         if len(postData['inputOffice']) < 3:
-            errors["1error071"] = "Registration failed! The office room required mininum of 3 characters."
+            errors["1error071"] = "Registration failed! The office room required minimum of 3 characters."
 
         if len(postData['inputPersonEmail']) < 7 or not EMAIL_REGEX.match(postData['inputPersonEmail']):
             errors["1error080"] = "Registration failed! Invalid personal email address!"
@@ -68,7 +68,7 @@ class PersonManager(models.Manager):
     def userType_validator(self, postData):
         errors = {}
         if len(postData['inputUserType']) < 3:
-            errors["3error1"] = "The description of campus group required mininum of 3 characters."
+            errors["3error1"] = "The description of campus group required minimum of 3 characters."
         return errors
 
     def userGroup_validator(self, postData):
@@ -78,7 +78,7 @@ class PersonManager(models.Manager):
     def mealType_validator(self, postData):
         errors = {}
         if len(postData['inputMealType']) < 3:
-            errors["4error1"] = "The description of meal card type required mininum of 3 characters."
+            errors["4error1"] = "The description of meal card type required minimum of 3 characters."
         if len(postData['inputMealAmt']) < 1:
             errors["4error2"] = "The amount of meal card is missing."
         return errors
@@ -90,9 +90,9 @@ class PersonManager(models.Manager):
     def building_validator(self, postData):
         errors = {}
         if len(postData['inputBuilding']) < 3:
-            errors["5error1"] = "The building name required mininum of 3 characters."
+            errors["5error1"] = "The building name required minimum of 3 characters."
         if len(postData['inputOffice']) < 3:
-            errors["5error2"] = "The office room required mininum of 3 characters."
+            errors["5error2"] = "The office room required minimum of 3 characters."
         return errors
 
     def parking_validator(self, postData):
